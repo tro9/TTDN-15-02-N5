@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- FORM VIEW -->
+        <record id="view_cong_viec_form" model="ir.ui.view">
+            <field name="name">cong_viec.form</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Công Việc</div>
+                        <group col="4" string="Thông tin chung">
+                            <!-- Drop-down menu for selecting du_an (project) -->
+                            
+                            <field name="project_id" string="Dự án" required="1"/>
+                            
+                            <field name="name" string="Tên công việc"/>
+                            <field name="description" string="Thông tin"/>
+                            <field name="assigned_to" string="Nhân viên phụ trách"/>
+                            <field name="priority" string="Mức độ ưu tiên"/>
+                            <field name="deadline" string="Deadline"/>
+                            <field name="num_emp" string="Số nhân viên"/>
+                            <field name="num_epuip" string="Số dụng cụ sử dụng"/>
+                            <field name="cost" string="Chi phí"/>
+                            <field name="status" string="Trạng thái"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- TREE VIEW -->
+        <record id="view_cong_viec_tree" model="ir.ui.view">
+            <field name="name">cong_viec.tree</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- Drop-down menu for filtering tasks by project -->
+                    <field name="project_id" string="Dự án"/>
+                    <field name="name" string="Tên công việc"/>
+                    <field name="assigned_to" string="Nhân viên phụ trách"/>
+                    <field name="priority" string="Mức độ ưu tiên"/>
+                    <field name="deadline" string="Deadline"/>
+                    <field name="num_emp" string="Số nhân viên"/>
+                    <field name="num_epuip" string="Số dụng cụ sử dụng"/>
+                    <field name="cost" string="Chi phí"/>
+                    <field name="status" string="Trạng thái"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- KANBAN VIEW -->
+        <record id="view_cong_viec_kanban" model="ir.ui.view">
+            <field name="name">cong_viec.kanban</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <kanban default_order="status" group_by="status">
+                    <field name="id"/>
+                    <field name="project_id"/> <!-- Ensure project_id is included -->
+                    <field name="name"/>
+                    <field name="assigned_to"/>
+                    <field name="priority"/>
+                    <field name="deadline"/>
+                    <field name="status"/>
+
+                    <!-- <filter string="Filter by Project" name="filter_project" domain="[]" context="{'group_by': 'project_id'}">
+                        <field name="project_id"/>
+                    </filter> -->
+
+                    
+
+                    <templates>
+
+                        <!-- <t t-name="kanban-box">
+                            <div>
+                                <label for="kanban_project_filter">Select Project:</label>
+                                <select class="kanban_project_filter" class="form-control">
+                                    <option value="all">All Projects</option>
+                                    <t t-foreach="records['du_an']" t-as="project">
+                                        <option t-att-value="project.id">
+                                            <t t-esc="project.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            
+                            <div class="oe_kanban_global_click">
+                                <strong><t t-esc="record.name.value"/></strong>
+                                <div>Thuộc dự án: <t t-esc="record.project_id.value"/></div>
+                            </div>
+                        </t> -->
+
+                        <t t-name="kanban-box">
+                            <a t-attf-href="#model=cong_viec&amp;id={{ record.id.raw_value }}&amp;view_type=form">
+                                <div class="oe_kanban_card">
+                                    <!-- Task details -->
+                                    <div class="o_kanban_details">
+                                        <strong>
+                                            <t t-esc="record.name.value"/>
+                                        </strong>
+                                        <div>
+                                            <span>Dự án: </span>
+                                            <t t-esc="record.project_id.value"/>
+                                        </div>
+                                        <div>
+                                            <span>Nhân viên phụ trách: </span>
+                                            <t t-esc="record.assigned_to.value"/>
+                                        </div>
+                                        <div>
+                                            <span>Mức độ ưu tiên: </span>
+                                            <t t-esc="record.priority.value"/>
+                                        </div>
+                                        <div>
+                                            <span>Deadline: </span>
+                                            <t t-esc="record.deadline.value"/>
+                                        </div>
+                                        <div>
+                                            <span>Trạng thái: </span>
+                                            <t t-esc="record.status.value"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </t>
+
+
+                        <t t-name="kanban-header">
+                            <div class="o_kanban_header">
+                                <div class="o_kanban_header_title">
+                                    <span>Công Việc</span>
+                                </div>
+                                <div class="o_kanban_header_buttons">
+                                    
+                                    <select class="o_kanban_project_filter">
+                                        <option value="0">Tất cả dự án</option>
+                                        <t t-foreach="projects" t-as="project">
+                                            <option t-att-value="project.id">
+                                                <t t-esc="project.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                    
+                                    <button class="btn btn-primary o_kanban_apply_filter">Lọc</button>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="cong_viec_search" model="ir.ui.view">
+            <field name="name">cong_viec.search</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <search>
+                    <!-- Add project_id to the search view for filtering -->
+                    <field name="project_id" string="Dự án"/>
+                    <field name="name" string="Tên công việc"/>
+                    <field name="assigned_to" string="Nhân viên phụ trách"/>
+                    <field name="priority" string="Mức độ ưu tiên"/>
+                    <field name="status" string="Trạng thái"/>
+
+                    <!-- <filter string="Dự án hiện tại" name="current_project" domain="[('project_id', '=', context.get('search_default_project_id', False))]"/> -->
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_cong_viec" model="ir.actions.act_window">
+            <field name="name">Công Việc</field>
+            <field name="res_model">cong_viec</field>
+            <field name="view_mode">kanban,tree,form</field> <!-- Add kanban view mode -->
+            <field name="search_view_id" ref="cong_viec_search"/>
+            
+            
+        </record>
+    </data>
+</odoo>

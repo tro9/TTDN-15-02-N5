@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <!-- Bar Chart for Total Project Cost -->
+        <record id="view_du_an_cost_graph" model="ir.ui.view">
+            <field name="name">du_an.total_cost.graph</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <graph type="bar">
+                    <field name="name" type="row"/> 
+                    <field name="total_project_cost" type="measure"/>
+                    <field name="status" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_du_an_cost_overview" model="ir.actions.act_window">
+            <field name="name">Chi phí Dự án</field>
+            <field name="res_model">du_an</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_du_an_cost_graph"/> 
+        </record>
+    </data>
+</odoo>

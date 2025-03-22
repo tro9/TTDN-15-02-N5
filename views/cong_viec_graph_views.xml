@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- GRAPH VIEW FOR TASKS -->
+        <record id="view_cong_viec_graph" model="ir.ui.view">
+            <field name="name">cong_viec.graph</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <graph type="pie">
+                    <!-- Group tasks by status -->
+                    <field name="status" type="row"/>
+                    <!-- Count the number of tasks in each status -->
+                    <field name="id" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- ACTION FOR TASK GRAPH VIEW -->
+        <record id="action_cong_viec_graph" model="ir.actions.act_window">
+            <field name="name">Tổng quan Công Việc</field>
+            <field name="res_model">cong_viec</field>
+            <field name="view_mode">graph</field> <!-- Only display the graph view -->
+            <field name="view_id" ref="view_cong_viec_graph"/> <!-- Use the new graph view -->
+        </record>
+    </data>
+</odoo>

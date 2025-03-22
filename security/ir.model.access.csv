@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_du_an,du_an.du_an,model_du_an,base.group_user,1,1,1,1
+access_cong_viec,cong_viec.cong_viec,model_cong_viec,,1,1,1,1
+access_nhan_vien,nhan_vien.nhan_vien,model_nhan_vien,,1,1,1,1
+access_cp,cp.cp,model_cp,,1,1,1,1
+access_on_du_an,on_du_an.on_du_an,model_on_du_an,,1,1,1,1

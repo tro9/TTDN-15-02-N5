@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Main Menu -->
+        <menuitem id="menu_root" name="QLDA" sequence="0"/>
+
+        <!-- Submenus -->
+        <menuitem id="menu_du_an" name="Dự Án" parent="menu_root" sequence="1" action="action_du_an"/>
+        <menuitem id="menu_cong_viec" name="Công Việc" parent="menu_root" sequence="1" action="action_cong_viec"/>
+        <menuitem id="menu_nhan_vien" name="Nhân Viên" parent="menu_root" sequence="1" action="action_nhan_vien"/>
+
+        <menuitem id="menu_cp" name="Liên hệ" parent="menu_root" sequence="1" action="action_cp"/>
+        <menuitem id="menu_on_du_an" name="Tham gia" parent="menu_root" sequence="1" action="action_on_du_an"/>
+        <menuitem id="menu_overview" name="Overview" parent="menu_root" sequence="1" action="action_du_an_overview"/>
+        <menuitem id="menu_du_an_cost_overview" name="Dashboard" parent="menu_root" sequence="1" action="action_du_an_cost_overview"/>
+        
+
+       
+        
+
+    </data>
+</odoo>

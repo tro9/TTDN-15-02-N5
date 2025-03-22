@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- FORM VIEW -->
+        <record id="view_on_du_an_form" model="ir.ui.view">
+            <field name="name">on_du_an.form</field>
+            <field name="model">on_du_an</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Dach sách tham gia</div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="project_id"/>
+                            <field name="cp_name"/>
+                            <field name="role"/>
+                            
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- TREE VIEW -->
+        <record id="view_on_du_an_tree" model="ir.ui.view">
+            <field name="name">on_du_an.tree</field>
+            <field name="model">on_du_an</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="project_id"/>
+                    <field name="cp_name"/>
+                    <field name="role"/>
+                    
+                </tree>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="on_du_an_search" model="ir.ui.view">
+            <field name="name">on_du_an.search</field>
+            <field name="model">on_du_an</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="project_id"/>
+                    <field name="cp_name"/>
+                    <field name="role"/>
+                    
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_on_du_an" model="ir.actions.act_window">
+            <field name="name">Khách hàng và đối tác</field>
+            <field name="res_model">on_du_an</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="on_du_an_search"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+.o_kanban_favorite {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #ccc; // Default star color (unfavorited)
+    font-size: 18px;
+
+    &:hover {
+        color: #ffc107; // Hover color
+    }
+
+    &.o_kanban_favorite_active {
+        color: #ffc107; // Active (favorited) color
+    }
+}
+
+
+
+.o_kanban_project_filter_container {
+    margin-bottom: 10px;
+}
+.o_kanban_project_filter {
+    padding: 5px;
+    font-size: 14px;
+}

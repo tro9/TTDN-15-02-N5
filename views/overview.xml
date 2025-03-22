@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <!-- Existing Pie Chart for Project Status -->
+        <record id="view_du_an_overview_graph" model="ir.ui.view">
+            <field name="name">du_an.overview.graph</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <graph type="pie">
+                    <field name="status" type="row"/>
+                    
+                    <field name="id" type="measure" operator="count"/> 
+                </graph>
+            </field>
+        </record> 
+
+       
+
+        <record id="action_du_an_overview" model="ir.actions.act_window">
+            <field name="name">Tổng quan Dự án</field>
+            <field name="res_model">du_an</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_du_an_overview_graph"/> 
+        </record>
+
+        
+
+       
+    </data>
+</odoo>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- FORM VIEW -->
+        <record id="view_du_an_form" model="ir.ui.view">
+            <field name="name">du_an.form</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <!-- Star icon for favorites in the form header -->
+                        <button name="toggle_favorite" type="object" class="oe_stat_button" icon="fa-star"
+                                attrs="{'invisible': [('is_favorite', '=', False)]}"/>
+                        <button name="toggle_favorite" type="object" class="oe_stat_button" icon="fa-star-o"
+                                attrs="{'invisible': [('is_favorite', '=', True)]}"/>
+                        <field name="is_favorite" invisible="1"/> <!-- Hidden field to store the favorite status -->
+
+                        <button name="action_open_task_graph" string="Tổng quan Công Việc" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Dự án</div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="project_id"/>  
+                            <field name="name"/>  
+                            <field name="description"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="actual_start_date"/>
+                            <field name="actual_end_date"/>
+
+                            <field name="total_labor_cost"/>
+                            <field name="total_equipment"/>
+                            <field name="total_project_cost"/>
+
+                            <field name="status"/>
+                            <field name="user_id"/>
+                        </group>
+
+
+                        <group string="Danh sách Công Việc" attrs="{'invisible': [('id', '=', False)]}">
+                            <field name="task_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="priority"/>
+                                    <field name="deadline"/>
+                                    <field name="status"/>
+                                    <button name="action_start_task" string="Start" type="object"
+                                        attrs="{'invisible': [('status', '!=', 'todo')]}"
+                                        class="oe_highlight"/>
+
+                                    
+                                    <button name="action_complete_task" string="Complete" type="object"
+                                        attrs="{'invisible': [('status', '!=', 'in_progress')]}"
+                                        class="oe_highlight"/>
+
+                                    
+                                </tree>
+                            </field>
+                        </group>
+
+                        
+
+                        <group string="Liên hệ">
+                            <field name="on_du_an_ids">
+                                <tree>
+                                    <field name="cp_name" string="Tên"/>
+                                    <field name="email" string="Email"/>
+                                    <field name="role" string="Vai trò"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        
+                    </sheet>
+
+                    <!-- <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div> -->
+
+                    
+                </form>
+            </field>
+        </record>
+
+        <!-- TREE VIEW -->
+        <record id="view_du_an_tree" model="ir.ui.view">
+            <field name="name">du_an.tree</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="project_id"/>  
+                    <field name="name"/>  
+                    <!-- <field name="description"/> -->
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="actual_start_date"/>
+                    <field name="actual_end_date"/>
+
+                    <field name="total_labor_cost"/>
+                    <field name="total_equipment"/>
+                    <field name="total_project_cost"/>
+
+                    <field name="is_favorite"/>
+
+                    <field name="progress" widget="progressbar"/>
+
+                    <field name="status"/>
+                    <field name="user_id"/>
+                    <button name="action_start_project" string="Start" type="object" attrs="{'invisible': [('status', '!=', 'draft')]}"/>
+                    <button name="action_pause_project" 
+                            string="Pause" 
+                            type="object"
+                            attrs="{'invisible': [('status', '!=', 'in_progress')]}" />
+                    
+                    <button name="action_cancel_project" 
+                            string="Cancel" 
+                            type="object"
+                            confirm="Are you sure you want to cancel this project?"
+                            attrs="{'invisible': [('status', '!=', 'paused')]}" />
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- KANBAN VIEW -->
+        <record id="view_du_an_kanban" model="ir.ui.view">
+            <field name="name">du_an.kanban</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/> <!-- Ensure the ID field is included -->
+                    <field name="project_id"/>
+                    <field name="name"/>
+                    <field name="status"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="user_id"/>
+                    <field name="total_project_cost"/>
+                    <field name="is_favorite"/> 
+                    <field name="progress" widget="progressbar"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card">
+                                <!-- Star icon for favorites -->
+                                <!-- <div class="o_kanban_favorite" t-attf-class="record.is_favorite.value ? 'o_kanban_favorite_active' : ''">
+                                    <button name="toggle_favorite" type="object" class="oe_stat_button" icon="fa-star"
+                                            attrs="{'invisible': [('is_favorite', '=', False)]}"/>
+                                    <button name="toggle_favorite" type="object" class="oe_stat_button" icon="fa-star-o"
+                                            attrs="{'invisible': [('is_favorite', '=', True)]}"/>
+                                </div> -->
+                                <!-- Star icon for favorites -->
+                                
+                                <div class="o_kanban_favorite" t-attf-class="record.is_favorite.value ? 'o_kanban_favorite_active' : ''">
+                                    <i class="fa fa-star" t-attf-title="record.is_favorite.value ? 'Remove from Favorites' : 'Add to Favorites'"
+                                    t-att-data-record-id="record.id.value"
+                                    t-on-click="(ev) => onFavoriteToggle(ev)"/>
+                                </div>
+
+                                
+
+                                <!-- Card content -->
+                                <a t-attf-href="#model=du_an&amp;id={{ record.id.value }}&amp;view_type=form">
+                                    <div class="o_kanban_details">
+                                        <strong>
+                                            <t t-esc="record.name.value"/>
+                                        </strong>
+                                        <div>
+                                            <span>ID: </span>
+                                            <t t-esc="record.project_id.value"/>
+                                        </div>
+                                        
+
+                                        <div class="o_kanban_progress">
+                                            <field name="progress" widget="progressbar"/>
+                                        </div>
+                                        <div>
+                                            <span>Status: </span>
+                                            <span class="badge" t-att-class="'badge-' + record.status.value">
+                                                <t t-esc="record.status.value"/>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span>Manager: </span>
+                                            <t t-esc="record.user_id.value"/>
+                                        </div>
+                                        <div>
+                                            <span>Start Date: </span>
+                                            <t t-esc="record.start_date.value"/>
+                                        </div>
+                                        <div>
+                                            <span>End Date: </span>
+                                            <t t-esc="record.end_date.value"/>
+                                        </div>
+                                        <div>
+                                            <span>Total Cost: </span>
+                                            <t t-esc="record.total_project_cost.value"/>
+                                            <span>VND</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+
+        
+
+        <!-- SEARCH VIEW -->
+        <record id="du_an_search" model="ir.ui.view">
+            <field name="name">du_an.search</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="project_id"/>  
+                    <field name="name"/>  
+                    <!-- <field name="description"/> -->
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="actual_start_date"/>
+                    <field name="actual_end_date"/>
+
+                    <field name="total_labor_cost"/>
+                    <field name="total_equipment"/>
+                    <field name="total_project_cost"/>
+                    <field name="is_favorite"/>
+
+                    <field name="status"/>
+                    <field name="user_id"/>
+
+                    
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_du_an" model="ir.actions.act_window">
+            <field name="name">Dự án</field>
+            <field name="res_model">du_an</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="du_an_search"/>
+        </record>
+    </data>
+</odoo>

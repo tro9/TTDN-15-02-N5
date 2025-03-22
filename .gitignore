@@ -1,0 +1,18 @@
+# Ignore Odoo temporary files
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.log
+*.pot
+*.mo
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore local configuration files
+.env
+*.conf
